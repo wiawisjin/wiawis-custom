@@ -1,6 +1,6 @@
 /**
  * WIAWIS Color Custom System
- * Version: 1.4.0
+ * Version: 1.4.2
  * 
  * 구조:
  * - Step 1: 모델 선택
@@ -336,18 +336,18 @@
     return pixels;
   }
   
-  // 펄 스파클 생성 (빽빽하고 잘 보이게)
+  // 펄 스파클 생성 (색상과 어우러지도록 오파시티 조정)
   function generatePearlParticles(pixels, count = 5000) {
     const particles = [];
     if (pixels.length === 0) return particles;
     
-    // 스파클 색상 팔레트
+    // 스파클 색상 팔레트 (반투명)
     const colors = [
-      '#ffffff',  // 순백
-      '#ffffff',  // 순백 (비중 높임)
-      '#fffef8',  // 크림
-      '#f8fcff',  // 블루틴트
-      '#fff8f8',  // 핑크틴트
+      'rgba(255,255,255,0.7)',  // 반투명 순백
+      'rgba(255,255,255,0.6)',  // 반투명 순백
+      'rgba(255,254,248,0.65)', // 반투명 크림
+      'rgba(248,252,255,0.6)',  // 반투명 블루틴트
+      'rgba(255,248,248,0.6)',  // 반투명 핑크틴트
     ];
     
     for (let i = 0; i < count; i++) {
@@ -355,13 +355,13 @@
       particles.push({
         x: pixel.x + (Math.random() - 0.5) * 1,
         y: pixel.y + (Math.random() - 0.5) * 1,
-        size: Math.random() * 0.6 + 0.4,  // 0.4 ~ 1.0px
-        maxOpacity: Math.random() * 0.4 + 0.6,  // 0.6 ~ 1.0 (더 밝게)
-        baseOpacity: Math.random() * 0.15 + 0.05,  // 0.05 ~ 0.2 (항상 약간 보임)
-        speed: Math.random() * 4 + 2,  // 반짝임 속도
+        size: Math.random() * 0.5 + 0.3,  // 0.3 ~ 0.8px (조금 작게)
+        maxOpacity: Math.random() * 0.3 + 0.4,  // 0.4 ~ 0.7 (더 부드럽게)
+        baseOpacity: Math.random() * 0.1 + 0.05,  // 0.05 ~ 0.15 (은은하게)
+        speed: Math.random() * 3 + 1.5,  // 반짝임 속도 (조금 느리게)
         phase: Math.random() * Math.PI * 2,
         color: colors[Math.floor(Math.random() * colors.length)],
-        type: Math.random() > 0.95 ? 'cross' : 'dot'  // 5%만 십자가
+        type: Math.random() > 0.97 ? 'cross' : 'dot'  // 3%만 십자가
       });
     }
     return particles;
@@ -947,32 +947,22 @@
                 </div>
               </div>
               
-              <!-- PEARL (펄 추가) - 메인/서브 + 펄 가능 색상일 때만 표시 -->
+              <!-- PEARL 안내 (pearlable 색상 선택 시) - 토글 없이 자동 적용 -->
               ${(() => {
-                // 메인/서브가 아니면 펄 버튼 숨김
+                // 메인/서브가 아니면 숨김
                 if (validActivePart !== 'main' && validActivePart !== 'sub') return '';
                 
                 const selectedColor = style[validActivePart]?.color;
-                const hasPearl = style[validActivePart]?.pearl;
                 if (!selectedColor?.pearlable) return '';
-                
-                const btnBg = hasPearl ? '#222' : '#f0f0f0';
-                const btnBorder = hasPearl ? '#222' : '#ccc';
-                const textColor = hasPearl ? '#fff' : '#222';
                 
                 return `
                 <div class="option-row" style="margin-bottom:20px;">
-                  <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
-                    <span class="option-label" style="font-size:0.8rem;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:1px;margin:0;">PEARL</span>
-                    <span style="font-size:0.65rem;color:#888;font-weight:400;">(${selectedColor.name}색상은 펄 적용 가능)</span>
-                  </div>
-                  <div class="option-buttons" style="display:flex;gap:10px;flex-wrap:wrap;">
-                    <button class="pearl-toggle ${hasPearl ? 'selected' : ''}"
-                            style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:${btnBg};border:2px solid ${btnBorder};border-radius:18px;cursor:pointer;">
-                      <span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:linear-gradient(135deg,#fff 0%,#ffd700 50%,#fff 100%);border:1px solid #ccc;${hasPearl ? 'animation:pearlPulse 1s infinite;' : ''}"></span>
-                      <span style="color:${textColor};font-size:0.85rem;font-weight:600;">펄 추가</span>
-                    </button>
-                    ${hasPearl ? '<span style="font-size:0.75rem;color:#f57c00;margin-left:8px;">화면의 펄 효과는 참고용이며, 실제 제품과는 다를 수 있습니다.</span>' : ''}
+                  <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);border-radius:10px;border:1px solid #f59e0b;">
+                    <span style="display:inline-block;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#fff 0%,#ffd700 50%,#fff 100%);border:1px solid #d4af37;animation:pearlPulse 1.5s infinite;flex-shrink:0;"></span>
+                    <div>
+                      <span style="font-size:0.85rem;font-weight:700;color:#92400e;">${selectedColor.name} - 펄 적용 컬러</span>
+                      <p style="font-size:0.7rem;color:#b45309;margin:4px 0 0 0;">이 색상은 펄이 기본 적용입니다. 화면의 효과는 참고용입니다.</p>
+                    </div>
                   </div>
                 </div>
                 `;
@@ -1310,15 +1300,6 @@
       render();
     });
     
-    // Step 3: 펄 옵션 토글
-    container.querySelectorAll('.pearl-toggle').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const part = state.ui.activePart;
-        state.selected.style[part].pearl = !state.selected.style[part].pearl;
-        render();
-      });
-    });
-    
     // Step 3: 색상 선택 (스타일)
     container.querySelectorAll('.color-swatch[data-color-id]').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -1326,10 +1307,13 @@
         const colorId = btn.dataset.colorId;
         const color = state.config.colors.frame.find(c => c.id === colorId);
         state.selected.style[part].color = color;
-        // 펄 불가능한 색상이면 펄 초기화
-        if (!color.pearlable) {
-          state.selected.style[part].pearl = false;
+        
+        // pearlable 색상이면 자동으로 펄 적용, 아니면 펄 해제
+        const isFramePart = part === 'main' || part === 'sub';
+        if (isFramePart) {
+          state.selected.style[part].pearl = color.pearlable === true;
         }
+        
         render();
       });
     });
