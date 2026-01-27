@@ -1,6 +1,6 @@
 /**
  * WIAWIS Color Custom System
- * Version: 1.3.9
+ * Version: 1.4.0
  * 
  * 구조:
  * - Step 1: 모델 선택
@@ -56,11 +56,17 @@
                   window.location.hostname === '127.0.0.1' ||
                   window.location.port !== '';
   
-  const BASE_URL = isLocal 
-    ? '.'  // 로컬: 현재 폴더 기준
-    : 'https://cdn.jsdelivr.net/gh/wiawisjin/wiawis-assets/custom';  // 프로덕션: CDN
+  // GitHub Pages 감지
+  const isGitHubPages = window.location.hostname.includes('github.io');
   
-  console.log('Mode:', isLocal ? 'LOCAL' : 'PRODUCTION', '| BASE_URL:', BASE_URL);
+  // BASE_URL 설정
+  // - 로컬/GitHub Pages: 상대 경로 사용
+  // - 외부 CDN 사용 시: CDN URL 입력
+  const BASE_URL = (isLocal || isGitHubPages) 
+    ? '.'  // 로컬 또는 GitHub Pages: 현재 폴더 기준
+    : '.';  // 기본값도 상대 경로 (필요시 CDN URL로 변경 가능)
+  
+  console.log('Mode:', isLocal ? 'LOCAL' : (isGitHubPages ? 'GITHUB_PAGES' : 'PRODUCTION'), '| BASE_URL:', BASE_URL);
   
   // 10분 단위 캐시 키
   const getCacheKey = () => Math.floor(Date.now() / 600000);
@@ -104,11 +110,12 @@
   // 유틸리티
   // ============================================
   
-  // config.json 로드 (10분 캐시)
+  // config.json 로드 (GitHub Pages에서는 캐시 무효화)
   async function loadConfig() {
-    const url = isLocal 
-      ? `${BASE_URL}/config.json`  // 로컬: 캐시 파라미터 없이
-      : `${BASE_URL}/config.json?t=${getCacheKey()}`;  // CDN: 캐시 키 추가
+    const useCache = !isLocal && !isGitHubPages;
+    const url = useCache
+      ? `${BASE_URL}/config.json?t=${getCacheKey()}`  // CDN: 캐시 키 추가
+      : `${BASE_URL}/config.json`;  // 로컬/GitHub Pages: 캐시 파라미터 없이
     const response = await fetch(url);
     if (!response.ok) throw new Error('Config load failed');
     return response.json();
@@ -116,8 +123,8 @@
 
   // 이미지 URL 생성 (버전 기반 캐시)
   function getImageUrl(path) {
-    if (isLocal) {
-      return `${BASE_URL}/${path}`;  // 로컬: 캐시 파라미터 없이
+    if (isLocal || isGitHubPages) {
+      return `${BASE_URL}/${path}`;  // 로컬/GitHub Pages: 캐시 파라미터 없이
     }
     const version = state.config?.version || '1.0.0';
     return `${BASE_URL}/${path}?v=${version}`;  // CDN: 버전 파라미터
