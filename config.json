@@ -1,49 +1,182 @@
 {
+  "_readme": {
+    "_1_소개": "WIAWIS 컬러 커스텀 설정 파일. _로 시작하는 키(_readme 등)는 설명용이며 무시됩니다.",
+    "_2_색상_입력": "colors.frame(페인트/프레임색), colors.logo(전사/로고색) 배열에 색을 추가합니다. 형식: { id, name, hex, [pantone] }",
+    "_6_특수색": "type 필드가 있으면 특수 렌더: chameleon(카멜레온: color1/color2/contrast), texture(UD카본: texture/brightness/fallbackHex), effect(로고 크롬/홀로그램). swatch=UI 스와치용 CSS.",
+    "_7_로고크롬": "로고 크롬/홀로그램은 로고파일에서 '가장 큰 덩어리=메인 로고'를 자동 인식해 적용됩니다. 각도·위치는 로고 형태로 자동 계산되어 모델별 지정이 필요 없습니다.",
+    "_8_모델추가": "models 배열에 { id(=폴더명), name, description, patterns, parts, specIdx } 추가. 로고 각도 지정 불필요.",
+    "_9_빈번호": "_blankSlots: 색표에서 아직 비어있는 번호. 나중에 paint-{번호}/decal-{번호} id로 추가하면 됩니다.",
+    "_3_펄": "펄: 색에 \"pearl\":\"<색><굵기>\" 한 속성만 넣으면 적용. 색=white/silver/gold/green/blue/chameleon (pearlPresets), 굵기=1(작게)/2(중간,기본)/3(크게). 굵기 생략시 2.",
+    "_3b_펄예시": "예) \"pearl\":\"gold2\"(골드 중간), \"pearl\":\"white3\"(흰펄 크게), \"pearl\":\"silver\"(실버 중간). 펄 없으면 pearl 속성 생략.",
+    "_3c_전사펄": "전사(로고) 색에도 \"pearl\":\"silver1\" 형식으로 넣으면 로고 위에 펄이 표시됩니다. 전사에서 숫자는 펄 양(1=드문드문, 2=빽빽). 실물처럼 고정되어 보이며 세부는 logoPearl에서 조절.",
+    "_10_문구": "화면 문구(프론트 페이지·가격표·단계 제목·단계 이름·펄 안내)는 texts 에서 수정. 따옴표(\")와 쉼표 주의."
+  },
   "_comment": "WIAWIS Color Custom System 설정 파일 - _comment와 _로 시작하는 필드는 설명용입니다",
-
   "defaultStyle": {
     "_comment": "Step 3 진입 및 초기화 시 적용되는 기본값. finish: gloss/matte, mainColor/subColor/logoColor: colors 배열의 id값, logoType: logoTypes의 id값",
     "finish": "gloss",
-    "mainColor": "black",
+    "mainColor": "paint-n43",
     "subColor": null,
     "logoType": "basic",
-    "logoColor": "white",
+    "logoColor": "decal-112",
     "logoFinish": "gloss"
   },
-
+  "texts": {
+    "_comment": "화면 문구. 여기서 고치면 사이트에 바로 반영됩니다(비우거나 지우면 기본 문구 사용). priceHeader는 '큰글씨|작은글씨', priceRows는 prices(금액) 또는 note(안내 문구) 중 하나. headings는 [굵은 단어, 회색 문장]. nav.steps는 단계 이름 4개.",
+    "intro": {
+      "eyebrow": "MAKE MY WIAWIS",
+      "title": "일상을 물들이는 나만의 특별한 위아위스",
+      "heroButton": "바로 시작하기",
+      "lead": "위아위스 커스텀 서비스로 나만의 자전거를 완성하세요",
+      "stepsTitle": "4단계로 완성하는 나만의 자전거",
+      "stepsSub": "Design Your Dream Bikes in 4 Simple Steps",
+      "steps": [
+        {
+          "title": "1. 모델 선택",
+          "desc": "마음에 드는 위아위스의 자전거 모델을 골라보세요. 최고의 기술력으로 설계된 모델이 준비되어 있습니다."
+        },
+        {
+          "title": "2. 디자인 스타일 선택",
+          "desc": "디자인 스타일을 결정합니다. 위아위스 고유의 패턴은 물론 다양한 스타일의 디자인이 준비되어 있습니다."
+        },
+        {
+          "title": "3. 컬러 커스터마이즈",
+          "desc": "자전거의 색상을 마음에 들게 꾸며보세요. 독특한 색상 조합과 패턴으로 나만의 자전거를 완성합니다."
+        },
+        {
+          "title": "4. 디자인 상담하기",
+          "desc": "완성된 디자인을 확인합니다. 다양한 각도로 디자인을 확인하고 마음에 들지 않으면 다시 수정할 수 있습니다."
+        }
+      ],
+      "guidebookButton": "커스텀 가이드북",
+      "startButton": "커스텀 시작하기",
+      "priceHeader": [
+        "구분",
+        "싱글|SINGLE",
+        "더블/페이드|DOUBLE/FADE",
+        "디자이너|DESIGNER"
+      ],
+      "priceRows": [
+        {
+          "label": "신규제작",
+          "prices": [
+            "60",
+            "80",
+            "130"
+          ]
+        },
+        {
+          "label": "컴포넌트",
+          "note": "신규 제작 - 컴포넌트 포함 (추가 비용) 핸들바 + 10만원, 싯포스트 +10만원"
+        },
+        {
+          "label": "재도장",
+          "prices": [
+            "90",
+            "110",
+            "150"
+          ]
+        }
+      ],
+      "priceUnit": "만원",
+      "galleryTitle": "커스텀으로 제작된 디자인을 만나보세요.",
+      "galleryButton": "커스텀 갤러리 바로가기"
+    },
+    "nav": {
+      "back": "‹ 커스텀 소개",
+      "steps": [
+        "모델",
+        "디자인",
+        "컬러",
+        "확인"
+      ]
+    },
+    "headings": {
+      "1": [
+        "모델.",
+        " 어떤 자전거로 시작할까요?"
+      ],
+      "2": [
+        "디자인.",
+        " 패턴을 골라보세요."
+      ],
+      "3": [
+        "컬러.",
+        " 나만의 조합을 골라보세요."
+      ],
+      "4": [
+        "확인.",
+        " 완성된 디자인을 살펴보세요."
+      ]
+    },
+    "pearlNotice": {
+      "suffix": " - 펄 적용 컬러",
+      "desc": "이 색상은 펄이 기본 적용입니다. 화면의 효과는 참고용입니다."
+    }
+  },
   "models": [
     {
-      "_comment": "id: 폴더명, patterns: 패턴 ID 배열, parts: 파트 ID 배열, specIdx: spec.do URL용",
       "id": "waws",
       "name": "WAWS",
       "description": "공기역학적인 디자인으로 라이딩 중에 발생하는 에어로 성능을 극대화한 에어로 바이크",
-      "patterns": ["single", "double1", "double2", "fade1", "fade2"],
-      "parts": ["main", "sub", "seatpost", "handlebar"],
+      "patterns": [
+        "single",
+        "double1",
+        "double2",
+        "fade1",
+        "fade2"
+      ],
+      "parts": [
+        "main",
+        "sub",
+        "seatpost",
+        "handlebar"
+      ],
       "specIdx": 17
     },
     {
       "id": "radical",
       "name": "RADICAL",
       "description": "업힐과 평지, 다운힐 어느곳에서도 최적의 성능을 발휘하는 올라운드 바이크",
-      "patterns": ["single", "double1", "double2", "fade1", "fade2"],
-      "parts": ["main", "sub", "seatpost", "handlebar"],
+      "patterns": [
+        "single",
+        "double1",
+        "double2",
+        "fade1",
+        "fade2"
+      ],
+      "parts": [
+        "main",
+        "sub",
+        "seatpost",
+        "handlebar"
+      ],
       "specIdx": 18
     },
     {
       "id": "hexion",
       "name": "HEXION",
       "description": "거친 산악 지형을 빠르게 오르고 부드럽게 내려올 수 있는 하드테일 XC 바이크",
-      "patterns": ["single", "double1"],
-      "parts": ["main", "sub", "seatpost", "handlebar"],
+      "patterns": [
+        "single",
+        "double1"
+      ],
+      "parts": [
+        "main",
+        "sub",
+        "seatpost",
+        "handlebar"
+      ],
       "specIdx": 19
     }
   ],
-
   "patterns": {
     "_comment": "layers: 색상 레이어 - ['main']은 단색, ['main','sub']는 투톤",
     "single": {
       "name": "SINGLE",
-      "layers": ["main"],
+      "layers": [
+        "main"
+      ],
       "price": "프레임 60만원",
       "componentPrice": "컴포넌트(싯포스트, 핸들바) 각 10만원 추가",
       "description": "단단한 속의 강렬함. 위아위스의 SINGLE 디자인은 기본적인 프레임 디자인과 로고 색상의 개성있는 조합의 자전거를 만들 수 있습니다.",
@@ -51,7 +184,10 @@
     },
     "double1": {
       "name": "DOUBLE 1",
-      "layers": ["main", "sub"],
+      "layers": [
+        "main",
+        "sub"
+      ],
       "price": "프레임 80만원",
       "componentPrice": "컴포넌트(싯포스트, 핸들바) 각 10만원 추가",
       "description": "위아위스 대표 패턴 DOUBLE1 위에 나만의 색상을 두가지 매치하세요. 두 색상의 대비와 조화로 나만의 자전거가 완성됩니다.",
@@ -59,7 +195,10 @@
     },
     "double2": {
       "name": "DOUBLE 2",
-      "layers": ["main", "sub"],
+      "layers": [
+        "main",
+        "sub"
+      ],
       "price": "프레임 80만원",
       "componentPrice": "컴포넌트(싯포스트, 핸들바) 각 10만원 추가",
       "description": "위아위스 대표 패턴 DOUBLE2는 강렬한 색상조회를 느낄 수 있는 위아위스의 시그니처 디자인 패턴입니다.",
@@ -67,7 +206,10 @@
     },
     "fade1": {
       "name": "FADED 1",
-      "layers": ["main", "sub"],
+      "layers": [
+        "main",
+        "sub"
+      ],
       "price": "프레임 80만원",
       "componentPrice": "컴포넌트(싯포스트, 핸들바) 각 10만원 추가",
       "description": "강렬한 부드러움을 느낄 수 있는 FADED 1은 위아위스의 고유의 패턴으로 빠른 스피드와 안정성을 동시에 표현하는 감각적인 디자인입니다.",
@@ -75,105 +217,1726 @@
     },
     "fade2": {
       "name": "FADED 2",
-      "layers": ["main", "sub"],
+      "layers": [
+        "main",
+        "sub"
+      ],
       "price": "프레임 80만원",
       "componentPrice": "컴포넌트(싯포스트, 핸들바) 각 10만원 추가",
       "description": "위아위스의 FADE 2는 안정성을 강조한 디자인으로 고급스런 이미지를 연출할 수 있습니다.",
       "specIdx": 15
     }
   },
-
   "parts": {
     "_comment": "name: 표시명, order: 순서, required: 필수 여부",
-    "main": { "name": "메인 컬러", "order": 1, "required": true, "specStyleIdx": 1 },
-    "sub": { "name": "서브 컬러", "order": 2, "required": true, "specStyleIdx": 2 },
-    "seatpost": { "name": "싯포스트", "order": 3, "required": false, "specStyleIdx": 3 },
-    "handlebar": { "name": "핸들바", "order": 4, "required": false, "specStyleIdx": 4 }
+    "main": {
+      "name": "메인 컬러",
+      "order": 1,
+      "required": true,
+      "specStyleIdx": 1
+    },
+    "sub": {
+      "name": "서브 컬러",
+      "order": 2,
+      "required": true,
+      "specStyleIdx": 2
+    },
+    "seatpost": {
+      "name": "싯포스트",
+      "order": 3,
+      "required": false,
+      "specStyleIdx": 3
+    },
+    "handlebar": {
+      "name": "핸들바",
+      "order": 4,
+      "required": false,
+      "specStyleIdx": 4
+    }
   },
-
   "logoTypes": [
-    { "_comment": "id: 로고 이미지 파일명과 일치", "id": "basic", "name": "기본로고", "specLogoIdx": 27 },
-    { "id": "top", "name": "상단로고", "specLogoIdx": 28 },
-    { "id": "line", "name": "라인로고", "specLogoIdx": 29 }
+    {
+      "_comment": "id: 로고 이미지 파일명과 일치",
+      "id": "basic",
+      "name": "기본로고",
+      "specLogoIdx": 27
+    },
+    {
+      "id": "top",
+      "name": "상단로고",
+      "specLogoIdx": 28
+    },
+    {
+      "id": "line",
+      "name": "라인로고",
+      "specLogoIdx": 29
+    }
   ],
-
   "finishes": [
-    { "_comment": "type: 폴더명으로 사용", "id": "gloss", "name": "유광", "type": "gloss", "specFlushIdx": 1 },
-    { "id": "matte", "name": "무광", "type": "matte", "specFlushIdx": 2 }
+    {
+      "_comment": "type: 폴더명으로 사용",
+      "id": "gloss",
+      "name": "유광",
+      "type": "gloss",
+      "specFlushIdx": 1
+    },
+    {
+      "id": "matte",
+      "name": "무광",
+      "type": "matte",
+      "specFlushIdx": 2
+    }
   ],
-
   "colors": {
-    "_comment": "pearlable: true면 펄 효과 적용 가능",
+    "_comment": "페인트=frame, 전사=logo (.ai 색표 v확정). 특수: chameleon/ud-carbon(frame), chrome/hologram(logo).",
     "frame": [
-      { "id": "navy", "name": "네이비", "hex": "#1a237e", "pantone": "2767 C" },
-      { "id": "navy-dark", "name": "다크네이비", "hex": "#0d1442", "pantone": "2768 C" },
-      { "id": "blue", "name": "블루", "hex": "#1565c0", "pantone": "2935 C", "pearlable": true },
-      { "id": "blue-dark", "name": "다크블루", "hex": "#0d47a1", "pantone": "2945 C" },
-      { "id": "blue-royal", "name": "로얄블루", "hex": "#1976d2", "pantone": "2935 C", "pearlable": true },
-      { "id": "sky", "name": "스카이", "hex": "#4fc3f7", "pantone": "2985 C", "pearlable": true },
-      { "id": "sky-light", "name": "라이트스카이", "hex": "#81d4fa", "pantone": "2975 C" },
-      { "id": "cyan", "name": "시안", "hex": "#00bcd4", "pantone": "3125 C", "pearlable": true },
-      { "id": "teal", "name": "틸", "hex": "#00897b", "pantone": "3282 C" },
-      { "id": "teal-dark", "name": "다크틸", "hex": "#00695c", "pantone": "3292 C" },
-      { "id": "emerald", "name": "에메랄드", "hex": "#2e7d32", "pantone": "355 C", "pearlable": true },
-      { "id": "green", "name": "그린", "hex": "#388e3c", "pantone": "349 C" },
-      { "id": "green-dark", "name": "다크그린", "hex": "#1b5e20", "pantone": "350 C" },
-      { "id": "lime", "name": "라임", "hex": "#9ccc65", "pantone": "376 C" },
-      { "id": "lime-bright", "name": "브라이트라임", "hex": "#c6ff00", "pantone": "389 C" },
-      { "id": "olive", "name": "올리브", "hex": "#827717", "pantone": "385 C" },
-      { "id": "red", "name": "레드", "hex": "#c62828", "pantone": "200 C", "pearlable": true },
-      { "id": "red-bright", "name": "브라이트레드", "hex": "#f44336", "pantone": "1788 C" },
-      { "id": "red-dark", "name": "다크레드", "hex": "#b71c1c", "pantone": "187 C" },
-      { "id": "crimson", "name": "크림슨", "hex": "#d32f2f", "pantone": "1797 C" },
-      { "id": "wine", "name": "와인", "hex": "#6d1b4d", "pantone": "222 C", "pearlable": true },
-      { "id": "burgundy", "name": "버건디", "hex": "#800020", "pantone": "202 C" },
-      { "id": "maroon", "name": "마룬", "hex": "#4e0000", "pantone": "188 C" },
-      { "id": "orange", "name": "오렌지", "hex": "#ef6c00", "pantone": "1665 C" },
-      { "id": "orange-bright", "name": "브라이트오렌지", "hex": "#ff9800", "pantone": "144 C" },
-      { "id": "orange-dark", "name": "다크오렌지", "hex": "#e65100", "pantone": "166 C" },
-      { "id": "coral", "name": "코랄", "hex": "#ff7043", "pantone": "170 C" },
-      { "id": "peach", "name": "피치", "hex": "#ffab91", "pantone": "162 C" },
-      { "id": "yellow", "name": "옐로우", "hex": "#fdd835", "pantone": "116 C" },
-      { "id": "yellow-bright", "name": "브라이트옐로우", "hex": "#ffeb3b", "pantone": "106 C" },
-      { "id": "yellow-dark", "name": "다크옐로우", "hex": "#f9a825", "pantone": "1235 C" },
-      { "id": "amber", "name": "앰버", "hex": "#ffb300", "pantone": "137 C" },
-      { "id": "pink", "name": "핑크", "hex": "#f06292", "pantone": "212 C", "pearlable": true },
-      { "id": "pink-light", "name": "라이트핑크", "hex": "#f8bbd9", "pantone": "196 C" },
-      { "id": "pink-hot", "name": "핫핑크", "hex": "#e91e63", "pantone": "213 C" },
-      { "id": "rose", "name": "로즈", "hex": "#ec407a", "pantone": "1915 C" },
-      { "id": "magenta", "name": "마젠타", "hex": "#ab47bc", "pantone": "253 C" },
-      { "id": "purple", "name": "퍼플", "hex": "#7b1fa2", "pantone": "2602 C", "pearlable": true },
-      { "id": "purple-deep", "name": "딥퍼플", "hex": "#4a148c", "pantone": "2612 C" },
-      { "id": "violet", "name": "바이올렛", "hex": "#9c27b0", "pantone": "2582 C" },
-      { "id": "lavender", "name": "라벤더", "hex": "#b39ddb", "pantone": "2635 C" },
-      { "id": "indigo", "name": "인디고", "hex": "#3f51b5", "pantone": "2736 C" },
-      { "id": "black", "name": "블랙", "hex": "#1a1a1a", "pantone": "Black C" },
-      { "id": "black-jet", "name": "젯블랙", "hex": "#000000", "pantone": "Black 6 C" },
-      { "id": "charcoal", "name": "차콜", "hex": "#424242", "pantone": "447 C" },
-      { "id": "gray", "name": "그레이", "hex": "#616161", "pantone": "Cool Gray 10 C" },
-      { "id": "gray-dark", "name": "다크그레이", "hex": "#424242", "pantone": "Cool Gray 11 C" },
-      { "id": "gray-light", "name": "라이트그레이", "hex": "#9e9e9e", "pantone": "Cool Gray 6 C" },
-      { "id": "silver", "name": "실버", "hex": "#bdbdbd", "pantone": "421 C", "pearlable": true },
-      { "id": "silver-bright", "name": "브라이트실버", "hex": "#e0e0e0", "pantone": "420 C", "pearlable": true },
-      { "id": "white", "name": "화이트", "hex": "#f5f5f5", "pantone": "000 C", "pearlable": true },
-      { "id": "white-pure", "name": "퓨어화이트", "hex": "#ffffff", "pantone": "000 C", "pearlable": true },
-      { "id": "ivory", "name": "아이보리", "hex": "#fffff0", "pantone": "7527 C" },
-      { "id": "cream", "name": "크림", "hex": "#fffdd0", "pantone": "7499 C" },
-      { "id": "gold", "name": "골드", "hex": "#d4af37", "pantone": "7555 C", "pearlable": true },
-      { "id": "gold-light", "name": "라이트골드", "hex": "#ffd700", "pantone": "109 C", "pearlable": true },
-      { "id": "bronze", "name": "브론즈", "hex": "#a67c52", "pantone": "729 C", "pearlable": true },
-      { "id": "copper", "name": "코퍼", "hex": "#b87333", "pantone": "729 C", "pearlable": true },
-      { "id": "brown", "name": "브라운", "hex": "#795548", "pantone": "4705 C" },
-      { "id": "brown-dark", "name": "다크브라운", "hex": "#4e342e", "pantone": "4695 C" }
+      {
+        "id": "paint-n01",
+        "name": "어반 블루",
+        "hex": "#8f91aa",
+        "num": null,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-n02",
+        "name": "페트롤블루",
+        "hex": "#7fb2bf",
+        "num": null,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-n03",
+        "name": "인디고블루",
+        "hex": "#18385b",
+        "num": null,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-n04",
+        "name": "라이트블루",
+        "hex": "#cff3f9",
+        "num": null
+      },
+      {
+        "id": "paint-n05",
+        "name": "펄블루",
+        "hex": "#002599",
+        "num": null,
+        "pearl": "blue2"
+      },
+      {
+        "id": "paint-n06",
+        "name": "다크블루",
+        "hex": "#32426d",
+        "num": null
+      },
+      {
+        "id": "paint-n07",
+        "name": "스페이스블루",
+        "hex": "#11123c",
+        "num": null,
+        "pearl": "blue3"
+      },
+      {
+        "id": "paint-n08",
+        "name": "카민 펄 레드",
+        "hex": "#f93515",
+        "num": null,
+        "pearl": "gold1"
+      },
+      {
+        "id": "paint-n09",
+        "name": "레밍턴 레드",
+        "hex": "#bc0808",
+        "num": null,
+        "pearl": "silver1"
+      },
+      {
+        "id": "paint-n10",
+        "name": "소닉 레드",
+        "hex": "#d13028",
+        "num": null,
+        "pearl": "gold2"
+      },
+      {
+        "id": "paint-n11",
+        "name": "브릭 레드",
+        "hex": "#c2463e",
+        "num": null,
+        "pearl": "silver1"
+      },
+      {
+        "id": "paint-n12",
+        "name": "카민 레드",
+        "hex": "#b21b26",
+        "num": null
+      },
+      {
+        "id": "paint-n13",
+        "name": "하이퍼 그레이",
+        "hex": "#cccac4",
+        "num": null
+      },
+      {
+        "id": "paint-n14",
+        "name": "페퍼 그레이",
+        "hex": "#97989b",
+        "num": null,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-n15",
+        "name": "쿨 그레이",
+        "hex": "#bfb6af",
+        "num": null
+      },
+      {
+        "id": "paint-n16",
+        "name": "레이싱 그레이",
+        "hex": "#c2c0bf",
+        "num": null
+      },
+      {
+        "id": "paint-n17",
+        "name": "티타늄 그레이",
+        "hex": "#5e5955",
+        "num": null,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-n18",
+        "name": "펄 그린",
+        "hex": "#1b4c2a",
+        "num": null,
+        "pearl": "green2"
+      },
+      {
+        "id": "paint-n19",
+        "name": "메탈릭 블루 그레이",
+        "hex": "#adafc4",
+        "num": null,
+        "pearl": "silver1"
+      },
+      {
+        "id": "paint-n20",
+        "name": "올리브 그린",
+        "hex": "#bfbe80",
+        "num": null,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-n21",
+        "name": "아쿠아 민트",
+        "hex": "#d5f7e6",
+        "num": null
+      },
+      {
+        "id": "paint-n22",
+        "name": "아이스 민트",
+        "hex": "#d2d8d5",
+        "num": null,
+        "pearl": "silver1"
+      },
+      {
+        "id": "paint-n23",
+        "name": "민트",
+        "hex": "#6aead1",
+        "num": null
+      },
+      {
+        "id": "paint-n24",
+        "name": "썬 옐로우",
+        "hex": "#ffc200",
+        "num": null
+      },
+      {
+        "id": "paint-n25",
+        "name": "일레트릭 라임",
+        "hex": "#ffff17",
+        "num": null
+      },
+      {
+        "id": "paint-n26",
+        "name": "코랄 핑크",
+        "hex": "#ffaeae",
+        "num": null
+      },
+      {
+        "id": "paint-n27",
+        "name": "핫 핑크",
+        "hex": "#ff3b73",
+        "num": null
+      },
+      {
+        "id": "paint-n28",
+        "name": "챠키 브라운",
+        "hex": "#725e57",
+        "num": null,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-n29",
+        "name": "메탈릭 실버",
+        "hex": "#d8d5d2",
+        "num": null
+      },
+      {
+        "id": "paint-n30",
+        "name": "새틴 메탈",
+        "hex": "#d1c7c3",
+        "num": null
+      },
+      {
+        "id": "paint-n31",
+        "name": "펄 아이보리",
+        "hex": "#fff1d2",
+        "num": null,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-n32",
+        "name": "아이보리",
+        "hex": "#f9e2b9",
+        "num": null
+      },
+      {
+        "id": "paint-n33",
+        "name": "아이스브리즈",
+        "hex": "#d0d4d6",
+        "num": null,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-n34",
+        "name": "블루레이",
+        "hex": "#d1ced6",
+        "num": null,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-n35",
+        "name": "아쿠아마린",
+        "hex": "#627684",
+        "num": null,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-n36",
+        "name": "카키메탈",
+        "hex": "#9eada7",
+        "num": null,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-n37",
+        "name": "샴페인 골드",
+        "hex": "#ddc4ac",
+        "num": null,
+        "pearl": "silver1"
+      },
+      {
+        "id": "paint-n38",
+        "name": "메탈릭 에메랄드",
+        "hex": "#414745",
+        "num": null,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-n39",
+        "name": "샌드베이지",
+        "hex": "#dbc6a1",
+        "num": null
+      },
+      {
+        "id": "paint-n40",
+        "name": "텐저린",
+        "hex": "#ea5826",
+        "num": null,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-n41",
+        "name": "펄 바이올렛",
+        "hex": "#7c3377",
+        "num": null,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-n42",
+        "name": "펄 라일락",
+        "hex": "#c985a7",
+        "num": null,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-n43",
+        "name": "펄 블랙",
+        "hex": "#281905",
+        "num": null
+      },
+      {
+        "id": "paint-n44",
+        "name": "펄 화이트",
+        "hex": "#f9f3ef",
+        "num": null,
+        "pearl": "silver1"
+      },
+      {
+        "id": "paint-n45",
+        "name": "갤럭시 브라운",
+        "hex": "#705a5a",
+        "num": null,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-48",
+        "name": "토프브라운",
+        "hex": "#968d7e",
+        "num": 48
+      },
+      {
+        "id": "paint-51",
+        "name": "다크 틸",
+        "hex": "#7a8889",
+        "num": 51,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-52",
+        "name": "크림 화이트",
+        "hex": "#fff8e9",
+        "num": 52
+      },
+      {
+        "id": "paint-53",
+        "name": "썬셋 레드",
+        "hex": "#e85d3d",
+        "num": 53,
+        "pearl": "gold2"
+      },
+      {
+        "id": "paint-54",
+        "name": "빈티지 그린",
+        "hex": "#30604b",
+        "num": 54,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-55",
+        "name": "임페리얼 그린",
+        "hex": "#113f44",
+        "num": 55,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-56",
+        "name": "샌드 드리프트",
+        "hex": "#f2b888",
+        "num": 56
+      },
+      {
+        "id": "paint-57",
+        "name": "민트 실버",
+        "hex": "#dce2df",
+        "num": 57,
+        "pearl": "silver1"
+      },
+      {
+        "id": "paint-49",
+        "name": "카멜레온 미스틱 화이트",
+        "hex": "#f9f2f2",
+        "num": 49,
+        "pearl": "chameleon2"
+      },
+      {
+        "id": "paint-58",
+        "name": "썬 레드",
+        "hex": "#ff3c15",
+        "num": 58,
+        "pearl": "gold2"
+      },
+      {
+        "id": "paint-61",
+        "name": "다크 브론즈",
+        "hex": "#5e5c5a",
+        "num": 61
+      },
+      {
+        "id": "paint-62",
+        "name": "요트블루",
+        "hex": "#105faf",
+        "num": 62,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-63",
+        "name": "라피스 블루",
+        "hex": "#4f71d3",
+        "num": 63,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-64",
+        "name": "브라운 블랙",
+        "hex": "#383531",
+        "num": 64,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-65",
+        "name": "골드 더스트",
+        "hex": "#473c30",
+        "num": 65,
+        "pearl": "gold2"
+      },
+      {
+        "id": "paint-66",
+        "name": "잉카 골드",
+        "hex": "#f4a071",
+        "num": 66,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-67",
+        "name": "크림골드",
+        "hex": "#c9b6a9",
+        "num": 67,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-59",
+        "name": "펄 코발트 블루",
+        "hex": "#2038af",
+        "num": 59,
+        "pearl": "blue2"
+      },
+      {
+        "id": "paint-68",
+        "name": "골드센트",
+        "hex": "#ad9f92",
+        "num": 68,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-69",
+        "name": "라이트 옐로우",
+        "hex": "#ffe67d",
+        "num": 69
+      },
+      {
+        "id": "paint-70",
+        "name": "라이트 핑크",
+        "hex": "#ffbbbb",
+        "num": 70
+      },
+      {
+        "id": "paint-71",
+        "name": "더스티 핑크",
+        "hex": "#fc877c",
+        "num": 71
+      },
+      {
+        "id": "paint-72",
+        "name": "코발트 블루",
+        "hex": "#0259af",
+        "num": 72
+      },
+      {
+        "id": "paint-73",
+        "name": "스노우 화이트",
+        "hex": "#fcf8f0",
+        "num": 73
+      },
+      {
+        "id": "paint-74",
+        "name": "클라우드 그레이",
+        "hex": "#e2ded7",
+        "num": 74
+      },
+      {
+        "id": "paint-75",
+        "name": "포그 그레이",
+        "hex": "#d1cbc5",
+        "num": 75
+      },
+      {
+        "id": "paint-76",
+        "name": "뮤트 핑크",
+        "hex": "#e09890",
+        "num": 76,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-77",
+        "name": "새틴 스틸 블루 1",
+        "hex": "#7d829e",
+        "num": 77,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-78",
+        "name": "새틴 포레스트",
+        "hex": "#809e78",
+        "num": 78,
+        "pearl": "green2"
+      },
+      {
+        "id": "paint-79",
+        "name": "새틴 스틸 블루 2",
+        "hex": "#595c6b",
+        "num": 79,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-80",
+        "name": "오렌지 레드",
+        "hex": "#ff3000",
+        "num": 80
+      },
+      {
+        "id": "paint-81",
+        "name": "소프트 핑크",
+        "hex": "#ffc9c2",
+        "num": 81
+      },
+      {
+        "id": "paint-82",
+        "name": "브릭 핑크",
+        "hex": "#ff8086",
+        "num": 82
+      },
+      {
+        "id": "paint-83",
+        "name": "네온 오렌지",
+        "hex": "#ff6010",
+        "num": 83
+      },
+      {
+        "id": "paint-84",
+        "name": "엠버 옐로우",
+        "hex": "#ff8e12",
+        "num": 84
+      },
+      {
+        "id": "paint-85",
+        "name": "스카이 화이트",
+        "hex": "#f9f9f9",
+        "num": 85
+      },
+      {
+        "id": "paint-86",
+        "name": "터키쉬 블루",
+        "hex": "#6cbbc1",
+        "num": 86
+      },
+      {
+        "id": "paint-87",
+        "name": "카프리 블루",
+        "hex": "#4691b2",
+        "num": 87,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-94",
+        "name": "모스 그린",
+        "hex": "#2c7056",
+        "num": 94,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-88",
+        "name": "딥 프루시안 블루",
+        "hex": "#324551",
+        "num": 88,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-89",
+        "name": "소닉 블루",
+        "hex": "#035fe5",
+        "num": 89
+      },
+      {
+        "id": "paint-90",
+        "name": "LX팀 블루",
+        "hex": "#64c0e8",
+        "num": 90
+      },
+      {
+        "id": "paint-91",
+        "name": "펄 다크 블루",
+        "hex": "#0f4b7c",
+        "num": 91,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-93",
+        "name": "스카이 하이 블루",
+        "hex": "#8ca1ad",
+        "num": 93,
+        "pearl": "silver2"
+      },
+      {
+        "id": "paint-92",
+        "name": "미드나이트 네이비",
+        "hex": "#0d3956",
+        "num": 92,
+        "pearl": "silver2"
+      },
+      {
+        "id": "chameleon-blue",
+        "name": "카멜레온 블루",
+        "type": "chameleon",
+        "color1": "#2c4989",
+        "color2": "#56328e",
+        "contrast": 1.5,
+        "normalize": "percentile",
+        "autoMidpoint": true,
+        "swatch": "linear-gradient(135deg,#2c4989,#56328e)",
+        "_note": "헥사=차트(.ai) 확정값. color1/color2 순서는 렌더 확인 후 필요시 스왑",
+        "pearl": "chameleon2"
+      },
+      {
+        "id": "chameleon-green",
+        "name": "카멜레온 그린",
+        "type": "chameleon",
+        "color1": "#114344",
+        "color2": "#57328d",
+        "contrast": 1.5,
+        "normalize": "percentile",
+        "autoMidpoint": true,
+        "swatch": "linear-gradient(135deg,#114344,#57328d)",
+        "_note": "헥사=차트(.ai) 확정값. color1/color2 순서는 렌더 확인 후 필요시 스왑",
+        "pearl": "chameleon2"
+      },
+      {
+        "id": "ud-carbon",
+        "name": "UD 카본",
+        "type": "texture",
+        "texture": "textures/ud-carbon.png",
+        "brightness": 1.6,
+        "fallbackHex": "#2a2a2a",
+        "swatch": "repeating-linear-gradient(115deg,#1c1c1c 0px,#3a3a3a 2px,#141414 4px)"
+      }
     ],
     "logo": [
-      { "id": "white", "name": "화이트", "hex": "#ffffff", "pantone": "000 C" },
-      { "id": "black", "name": "블랙", "hex": "#1a1a1a", "pantone": "Black C" },
-      { "id": "silver", "name": "실버", "hex": "#bdbdbd", "pantone": "421 C" },
-      { "id": "gold", "name": "골드", "hex": "#d4af37", "pantone": "7555 C" }
+      {
+        "id": "decal-1",
+        "name": "메탈릭실버",
+        "hex": "#bfbfbf",
+        "num": 1,
+        "pearl": "silver2"
+      },
+      {
+        "id": "decal-2",
+        "name": "미네랄실버",
+        "hex": "#828282",
+        "num": 2,
+        "pearl": "silver2"
+      },
+      {
+        "id": "decal-3",
+        "name": "페퍼실버",
+        "hex": "#444443",
+        "num": 3,
+        "pearl": "silver2"
+      },
+      {
+        "id": "decal-4",
+        "name": "카본실버",
+        "hex": "#302d29",
+        "num": 4,
+        "pearl": "silver2"
+      },
+      {
+        "id": "decal-5",
+        "name": "울프실버",
+        "hex": "#696a6d",
+        "num": 5
+      },
+      {
+        "id": "decal-6",
+        "name": "스틸실버",
+        "hex": "#7c7a7a",
+        "num": 6
+      },
+      {
+        "id": "decal-7",
+        "name": "민트그린",
+        "hex": "#41ceb6",
+        "num": 7
+      },
+      {
+        "id": "decal-8",
+        "name": "볼트그린",
+        "hex": "#e4f923",
+        "num": 8
+      },
+      {
+        "id": "decal-9",
+        "name": "리프그린",
+        "hex": "#008931",
+        "num": 9
+      },
+      {
+        "id": "decal-10",
+        "name": "UCI 그린",
+        "hex": "#04963f",
+        "num": 10
+      },
+      {
+        "id": "decal-11",
+        "name": "다크그린",
+        "hex": "#0b4f3a",
+        "num": 11
+      },
+      {
+        "id": "decal-12",
+        "name": "티그린",
+        "hex": "#c8dbcb",
+        "num": 12
+      },
+      {
+        "id": "decal-13",
+        "name": "스웜프그린",
+        "hex": "#2d3f38",
+        "num": 13
+      },
+      {
+        "id": "decal-14",
+        "name": "머디그린",
+        "hex": "#474740",
+        "num": 14
+      },
+      {
+        "id": "decal-15",
+        "name": "미스트그린",
+        "hex": "#9ab29c",
+        "num": 15
+      },
+      {
+        "id": "decal-16",
+        "name": "세이지그린",
+        "hex": "#7e9b7f",
+        "num": 16
+      },
+      {
+        "id": "decal-17",
+        "name": "라임그린",
+        "hex": "#f4ed6e",
+        "num": 17
+      },
+      {
+        "id": "decal-18",
+        "name": "미디엄그린",
+        "hex": "#017a26",
+        "num": 18
+      },
+      {
+        "id": "decal-19",
+        "name": "네온오렌지",
+        "hex": "#ff5a00",
+        "num": 19
+      },
+      {
+        "id": "decal-20",
+        "name": "브라이트 오렌지",
+        "hex": "#ff4800",
+        "num": 20
+      },
+      {
+        "id": "decal-21",
+        "name": "레드 오렌지",
+        "hex": "#ef3300",
+        "num": 21
+      },
+      {
+        "id": "decal-22",
+        "name": "러스트 오렌지",
+        "hex": "#e0541e",
+        "num": 22
+      },
+      {
+        "id": "decal-23",
+        "name": "다이나믹 옐로우",
+        "hex": "#ffb92e",
+        "num": 23
+      },
+      {
+        "id": "decal-24",
+        "name": "엠버 옐로우",
+        "hex": "#ffaa00",
+        "num": 24
+      },
+      {
+        "id": "decal-25",
+        "name": "피치 옐로우",
+        "hex": "#ffcf9f",
+        "num": 25
+      },
+      {
+        "id": "decal-26",
+        "name": "네온 옐로우",
+        "hex": "#fff200",
+        "num": 26
+      },
+      {
+        "id": "decal-27",
+        "name": "레몬 옐로우",
+        "hex": "#ffe600",
+        "num": 27
+      },
+      {
+        "id": "decal-28",
+        "name": "오크 옐로우",
+        "hex": "#938445",
+        "num": 28
+      },
+      {
+        "id": "decal-29",
+        "name": "투스카니 옐로우",
+        "hex": "#f2a620",
+        "num": 29
+      },
+      {
+        "id": "decal-30",
+        "name": "퓨어 블루",
+        "hex": "#0052a3",
+        "num": 30
+      },
+      {
+        "id": "decal-31",
+        "name": "스카이블루",
+        "hex": "#24aaed",
+        "num": 31
+      },
+      {
+        "id": "decal-32",
+        "name": "코튼블루",
+        "hex": "#8ad1f9",
+        "num": 32
+      },
+      {
+        "id": "decal-33",
+        "name": "퍼시픽블루",
+        "hex": "#3288ad",
+        "num": 33
+      },
+      {
+        "id": "decal-34",
+        "name": "예일블루",
+        "hex": "#1c5b99",
+        "num": 34
+      },
+      {
+        "id": "decal-35",
+        "name": "유니버시티블루",
+        "hex": "#28a0dd",
+        "num": 35
+      },
+      {
+        "id": "decal-36",
+        "name": "네온블루",
+        "hex": "#2ab2db",
+        "num": 36
+      },
+      {
+        "id": "decal-37",
+        "name": "코발트블루",
+        "hex": "#245d91",
+        "num": 37
+      },
+      {
+        "id": "decal-38",
+        "name": "카프리블루",
+        "hex": "#45beed",
+        "num": 38
+      },
+      {
+        "id": "decal-39",
+        "name": "미디엄블루",
+        "hex": "#04579b",
+        "num": 39
+      },
+      {
+        "id": "decal-40",
+        "name": "틸블루",
+        "hex": "#35979e",
+        "num": 40
+      },
+      {
+        "id": "decal-41",
+        "name": "미드나이트블루",
+        "hex": "#093642",
+        "num": 41,
+        "pearl": "blue1"
+      },
+      {
+        "id": "decal-42",
+        "name": "UCI블루",
+        "hex": "#0272c6",
+        "num": 42
+      },
+      {
+        "id": "decal-43",
+        "name": "딥블루",
+        "hex": "#164370",
+        "num": 43
+      },
+      {
+        "id": "decal-44",
+        "name": "네이비블루",
+        "hex": "#143860",
+        "num": 44
+      },
+      {
+        "id": "decal-45",
+        "name": "미스트블루",
+        "hex": "#8897b7",
+        "num": 45
+      },
+      {
+        "id": "decal-46",
+        "name": "웨일블루",
+        "hex": "#385b8e",
+        "num": 46
+      },
+      {
+        "id": "decal-47",
+        "name": "베이비블루",
+        "hex": "#c0c4d8",
+        "num": 47
+      },
+      {
+        "id": "decal-48",
+        "name": "파우더블루",
+        "hex": "#9199b7",
+        "num": 48
+      },
+      {
+        "id": "decal-49",
+        "name": "비비드레드",
+        "hex": "#f40c0c",
+        "num": 49
+      },
+      {
+        "id": "decal-50",
+        "name": "퓨어레드",
+        "hex": "#e01500",
+        "num": 50
+      },
+      {
+        "id": "decal-51",
+        "name": "스칼렛 레드",
+        "hex": "#f23a0f",
+        "num": 51
+      },
+      {
+        "id": "decal-52",
+        "name": "칠리레드",
+        "hex": "#c90c02",
+        "num": 52
+      },
+      {
+        "id": "decal-53",
+        "name": "캔디레드",
+        "hex": "#dd2f26",
+        "num": 53
+      },
+      {
+        "id": "decal-54",
+        "name": "소다레드",
+        "hex": "#cc2521",
+        "num": 54
+      },
+      {
+        "id": "decal-55",
+        "name": "가넷레드",
+        "hex": "#aa1a1a",
+        "num": 55
+      },
+      {
+        "id": "decal-56",
+        "name": "크림슨레드",
+        "hex": "#a83535",
+        "num": 56
+      },
+      {
+        "id": "decal-57",
+        "name": "마룬레드",
+        "hex": "#8e2825",
+        "num": 57
+      },
+      {
+        "id": "decal-58",
+        "name": "체리레드",
+        "hex": "#8e0606",
+        "num": 58
+      },
+      {
+        "id": "decal-59",
+        "name": "클라우디그레이",
+        "hex": "#d5d2d6",
+        "num": 59
+      },
+      {
+        "id": "decal-60",
+        "name": "UCI그레이",
+        "hex": "#969696",
+        "num": 60
+      },
+      {
+        "id": "decal-61",
+        "name": "아이스 그레이",
+        "hex": "#c4c4c6",
+        "num": 61
+      },
+      {
+        "id": "decal-62",
+        "name": "메탈릭 블루 그레이",
+        "hex": "#9599ad",
+        "num": 62,
+        "pearl": "silver1"
+      },
+      {
+        "id": "decal-63",
+        "name": "슬래이트 그레이",
+        "hex": "#5f6870",
+        "num": 63
+      },
+      {
+        "id": "decal-64",
+        "name": "스모크 그레이",
+        "hex": "#a5a5a5",
+        "num": 64
+      },
+      {
+        "id": "decal-65",
+        "name": "쉐도우 그레이",
+        "hex": "#515560",
+        "num": 65
+      },
+      {
+        "id": "decal-66",
+        "name": "쿨 그레이",
+        "hex": "#a0a0a5",
+        "num": 66
+      },
+      {
+        "id": "decal-67",
+        "name": "쿨 그레이2",
+        "hex": "#9999a3",
+        "num": 67
+      },
+      {
+        "id": "decal-68",
+        "name": "본 그레이",
+        "hex": "#c6baab",
+        "num": 68
+      },
+      {
+        "id": "decal-69",
+        "name": "코스모 그레이",
+        "hex": "#605f66",
+        "num": 69
+      },
+      {
+        "id": "decal-70",
+        "name": "다크 그레이",
+        "hex": "#3a3939",
+        "num": 70
+      },
+      {
+        "id": "decal-71",
+        "name": "페일 그레이",
+        "hex": "#b7b5ac",
+        "num": 71
+      },
+      {
+        "id": "decal-72",
+        "name": "펄 블랙",
+        "hex": "#2a2b2b",
+        "num": 72,
+        "pearl": "silver1"
+      },
+      {
+        "id": "decal-73",
+        "name": "제트 블랙",
+        "hex": "#353535",
+        "num": 73,
+        "pearl": "silver1"
+      },
+      {
+        "id": "decal-74",
+        "name": "말로야 블랙",
+        "hex": "#212323",
+        "num": 74
+      },
+      {
+        "id": "decal-75",
+        "name": "씨더 브라운",
+        "hex": "#563e30",
+        "num": 75
+      },
+      {
+        "id": "decal-76",
+        "name": "포그 브라운",
+        "hex": "#6d6361",
+        "num": 76
+      },
+      {
+        "id": "decal-77",
+        "name": "마카다미아 브라운",
+        "hex": "#bcab9c",
+        "num": 77
+      },
+      {
+        "id": "decal-78",
+        "name": "애쉬 브라운",
+        "hex": "#938276",
+        "num": 78
+      },
+      {
+        "id": "decal-79",
+        "name": "엄버 브라운",
+        "hex": "#6b5c51",
+        "num": 79
+      },
+      {
+        "id": "decal-80",
+        "name": "네온 라임",
+        "hex": "#93f270",
+        "num": 80
+      },
+      {
+        "id": "decal-81",
+        "name": "일렉트로 라임",
+        "hex": "#86e55e",
+        "num": 81
+      },
+      {
+        "id": "decal-82",
+        "name": "핫 핑크",
+        "hex": "#ff558e",
+        "num": 82
+      },
+      {
+        "id": "decal-83",
+        "name": "펀치 핑크",
+        "hex": "#f74664",
+        "num": 83
+      },
+      {
+        "id": "decal-84",
+        "name": "건 메탈",
+        "hex": "#565655",
+        "num": 84
+      },
+      {
+        "id": "decal-85",
+        "name": "메탈릭 카키",
+        "hex": "#547573",
+        "num": 85,
+        "pearl": "silver2"
+      },
+      {
+        "id": "decal-86",
+        "name": "새틴 메탈",
+        "hex": "#b5b5b5",
+        "num": 86,
+        "pearl": "silver2"
+      },
+      {
+        "id": "decal-87",
+        "name": "탄 베이지",
+        "hex": "#9b8b81",
+        "num": 87
+      },
+      {
+        "id": "decal-88",
+        "name": "다크 베이지",
+        "hex": "#a59283",
+        "num": 88
+      },
+      {
+        "id": "decal-89",
+        "name": "스톤 골드",
+        "hex": "#705b2d",
+        "num": 89,
+        "pearl": "gold1"
+      },
+      {
+        "id": "decal-90",
+        "name": "로즈 골드",
+        "hex": "#875532",
+        "num": 90,
+        "pearl": "gold1"
+      },
+      {
+        "id": "decal-91",
+        "name": "엔틱 골드",
+        "hex": "#7f683e",
+        "num": 91,
+        "pearl": "gold1"
+      },
+      {
+        "id": "decal-92",
+        "name": "나이트 스카이",
+        "hex": "#343749",
+        "num": 92
+      },
+      {
+        "id": "decal-93",
+        "name": "다크 네이비",
+        "hex": "#31384c",
+        "num": 93
+      },
+      {
+        "id": "decal-94",
+        "name": "그레이지",
+        "hex": "#bfb5ac",
+        "num": 94
+      },
+      {
+        "id": "decal-95",
+        "name": "헤이즐 우드",
+        "hex": "#a89c92",
+        "num": 95
+      },
+      {
+        "id": "decal-96",
+        "name": "쵸코렛",
+        "hex": "#603329",
+        "num": 96
+      },
+      {
+        "id": "decal-99",
+        "name": "메탈릭 카멜레온 그린",
+        "hex": "#abb2ab",
+        "num": 99,
+        "pearl": "chameleon1"
+      },
+      {
+        "id": "decal-100",
+        "name": "메탈릭 카멜레온 블루",
+        "hex": "#aaaaba",
+        "num": 100,
+        "pearl": "chameleon1"
+      },
+      {
+        "id": "decal-101",
+        "name": "미네랄 카멜레온 그린",
+        "hex": "#838783",
+        "num": 101,
+        "pearl": "chameleon1"
+      },
+      {
+        "id": "decal-102",
+        "name": "미네랄 카멜레온블루",
+        "hex": "#7c7c8c",
+        "num": 102,
+        "pearl": "chameleon1"
+      },
+      {
+        "id": "decal-103",
+        "name": "카멜레온 그린",
+        "hex": "#1e4941",
+        "num": 103,
+        "pearl": "chameleon2"
+      },
+      {
+        "id": "decal-104",
+        "name": "카멜레온 블루",
+        "hex": "#143166",
+        "num": 104,
+        "pearl": "chameleon2"
+      },
+      {
+        "id": "decal-108",
+        "name": "페퍼 카멜레온 그린",
+        "hex": "#3c4946",
+        "num": 108,
+        "pearl": "chameleon2"
+      },
+      {
+        "id": "decal-109",
+        "name": "페퍼 카멜레온 블루",
+        "hex": "#354459",
+        "num": 109,
+        "pearl": "chameleon2"
+      },
+      {
+        "id": "decal-110",
+        "name": "라이트 바이올렛",
+        "hex": "#d8bfdb",
+        "num": 110
+      },
+      {
+        "id": "decal-111",
+        "name": "말리부 베이지",
+        "hex": "#ada197",
+        "num": 111
+      },
+      {
+        "id": "decal-112",
+        "name": "코튼 화이트",
+        "hex": "#edefef",
+        "num": 112
+      },
+      {
+        "id": "decal-113",
+        "name": "고스트 화이트",
+        "hex": "#dfe5ea",
+        "num": 113
+      },
+      {
+        "id": "decal-114",
+        "name": "샌드 브라운",
+        "hex": "#967e6c",
+        "num": 114
+      },
+      {
+        "id": "decal-115",
+        "name": "클레이 오렌지",
+        "hex": "#dd4d05",
+        "num": 115
+      },
+      {
+        "id": "decal-116",
+        "name": "카멜레온 코퍼",
+        "hex": "#3f2b2f",
+        "num": 116,
+        "pearl": "chameleon2"
+      },
+      {
+        "id": "decal-117",
+        "name": "메탈릭 카멜레온 코퍼",
+        "hex": "#aaaaaa",
+        "num": 117,
+        "pearl": "chameleon1"
+      },
+      {
+        "id": "decal-118",
+        "name": "미네랄 카멜레온 코퍼",
+        "hex": "#706b69",
+        "num": 118,
+        "pearl": "chameleon1"
+      },
+      {
+        "id": "decal-119",
+        "name": "페퍼 카멜레온 코퍼",
+        "hex": "#6d635f",
+        "num": 119,
+        "pearl": "chameleon1"
+      },
+      {
+        "id": "decal-120",
+        "name": "펌킨 오렌지",
+        "hex": "#f77823",
+        "num": 120
+      },
+      {
+        "id": "decal-121",
+        "name": "다크 브라운",
+        "hex": "#3a2119",
+        "num": 121
+      },
+      {
+        "id": "decal-122",
+        "name": "미디움실버",
+        "hex": "#898989",
+        "num": 122,
+        "pearl": "silver2"
+      },
+      {
+        "id": "decal-123",
+        "name": "딥그린",
+        "hex": "#254c46",
+        "num": 123
+      },
+      {
+        "id": "decal-124",
+        "name": "히코리 브라운",
+        "hex": "#602b1d",
+        "num": 124
+      },
+      {
+        "id": "decal-125",
+        "name": "스모크 그린",
+        "hex": "#98af9b",
+        "num": 125
+      },
+      {
+        "id": "decal-126",
+        "name": "코랄 핑크",
+        "hex": "#f7a1b1",
+        "num": 126
+      },
+      {
+        "id": "decal-127",
+        "name": "루비 핑크",
+        "hex": "#ff3185",
+        "num": 127
+      },
+      {
+        "id": "decal-128",
+        "name": "캘리 그린",
+        "hex": "#1cc433",
+        "num": 128
+      },
+      {
+        "id": "decal-129",
+        "name": "벨벳 로즈",
+        "hex": "#ea8078",
+        "num": 129
+      },
+      {
+        "id": "decal-130",
+        "name": "핑크 폼",
+        "hex": "#fcb4b4",
+        "num": 130
+      },
+      {
+        "id": "decal-131",
+        "name": "쉘 화이트",
+        "hex": "#ffd6cf",
+        "num": 131
+      },
+      {
+        "id": "decal-132",
+        "name": "딥오션",
+        "hex": "#3a4749",
+        "num": 132
+      },
+      {
+        "id": "decal-133",
+        "name": "다크 틸 블루",
+        "hex": "#007f89",
+        "num": 133
+      },
+      {
+        "id": "decal-134",
+        "name": "클레이 오렌지2",
+        "hex": "#d15611",
+        "num": 134
+      },
+      {
+        "id": "decal-135",
+        "name": "클라우드 블루",
+        "hex": "#dce6f4",
+        "num": 135
+      },
+      {
+        "id": "decal-136",
+        "name": "탱고 핑크",
+        "hex": "#e28a6f",
+        "num": 136
+      },
+      {
+        "id": "decal-137",
+        "name": "크리스탈 틸",
+        "hex": "#006a87",
+        "num": 137
+      },
+      {
+        "id": "decal-138",
+        "name": "E 그레이1",
+        "hex": "#efdddc",
+        "num": 138
+      },
+      {
+        "id": "decal-139",
+        "name": "E 그레이2",
+        "hex": "#d6b2a7",
+        "num": 139
+      },
+      {
+        "id": "decal-140",
+        "name": "E 그레이3",
+        "hex": "#d89a7c",
+        "num": 140
+      },
+      {
+        "id": "decal-141",
+        "name": "네온핑크",
+        "hex": "#ff2277",
+        "num": 141
+      },
+      {
+        "id": "decal-142",
+        "name": "새틴 핑크",
+        "hex": "#ff4379",
+        "num": 142
+      },
+      {
+        "id": "decal-143",
+        "name": "루즈 핑크",
+        "hex": "#ed588a",
+        "num": 143
+      },
+      {
+        "id": "decal-144",
+        "name": "라이트그린",
+        "hex": "#7edd2a",
+        "num": 144
+      },
+      {
+        "id": "decal-145",
+        "name": "일레트릭 옐로우",
+        "hex": "#ffe000",
+        "num": 145
+      },
+      {
+        "id": "decal-146",
+        "name": "아이언 그레이",
+        "hex": "#59595b",
+        "num": 146
+      },
+      {
+        "id": "decal-147",
+        "name": "스틸 그레이",
+        "hex": "#727272",
+        "num": 147
+      },
+      {
+        "_comment": "--- 로고 특수효과 (v1.5.0) : type=effect 이면 app.js의 LOGO_EFFECT_STOPS로 렌더 ---",
+        "id": "chrome-gold",
+        "name": "크롬 골드",
+        "type": "effect"
+      },
+      {
+        "id": "chrome-silver",
+        "name": "크롬 실버",
+        "type": "effect"
+      },
+      {
+        "id": "hologram",
+        "name": "홀로그램",
+        "type": "effect"
+      }
     ]
   },
-
-  "version": "1.2.1",
-  "buildDate": "2026-01-27T12:00:00+09:00"
+  "overlays": {
+    "_comment": "모델 폴더 기준 상대경로 — assets/models/{모델}/overlays/... , intensity 미지정 시 1 (PNG 알파에 강도 내장)",
+    "gloss": {
+      "shadow": "overlays/gloss/shadow.png",
+      "highlight": "overlays/gloss/highlight.png",
+      "intensity": 1
+    },
+    "matte": {
+      "shadow": "overlays/matte/shadow.png",
+      "highlight": "overlays/matte/highlight.png",
+      "intensity": 1
+    }
+  },
+  "background": "#faf8f4",
+  "version": "1.9.1",
+  "buildDate": "2026-09-11T10:00:00+09:00",
+  "_blankSlots": {
+    "_comment": "빈 번호 - 나중에 채울 자리. 채워지면 paint-{n}/decal-{n} id로 추가",
+    "paint": [
+      50,
+      60,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107
+    ],
+    "transfer": [
+      97,
+      98,
+      105,
+      106,
+      107,
+      148,
+      149,
+      150
+    ]
+  },
+  "pearlPresets": {
+    "_comment": "펄 색 프리셋. 프레임 색에서 \"pearl\":\"gold\" 처럼 이름으로 참조. colors=반짝이 색 배열, iridescent=무지갯빛(카멜레온)",
+    "white": {
+      "colors": [
+        "#ffffff",
+        "#fffef8",
+        "#f8fcff"
+      ]
+    },
+    "silver": {
+      "colors": [
+        "#b8bcc8",
+        "#d6d9e2",
+        "#9aa0ae"
+      ]
+    },
+    "gold": {
+      "colors": [
+        "#f5c23c",
+        "#ffd970",
+        "#e0a91e"
+      ]
+    },
+    "green": {
+      "colors": [
+        "#3fce8a",
+        "#6ee6ad",
+        "#22a86a"
+      ]
+    },
+    "blue": {
+      "colors": [
+        "#3f8fe0",
+        "#6fb3ff",
+        "#2f6fc0"
+      ]
+    },
+    "chameleon": {
+      "colors": [
+        "#ff5fa8",
+        "#ffc23f",
+        "#3fe6c0",
+        "#5f8fff",
+        "#c25fff"
+      ],
+      "iridescent": true
+    }
+  },
+  "logoPearl": {
+    "_comment": "전사(로고) 펄. pearl 숫자=펄 양(1=검정 샘플처럼 드문드문, 2=녹색 샘플처럼 빽빽). mode: static=실물처럼 고정(조명 하이라이트 위치에서 더 반짝), flow=빛 띠가 흘러감. levels: density=밀도, size=입자 크기, alpha=밝기. lightFloor=어두운 부분 최소 밝기(0~1, 낮출수록 하이라이트 쪽에 몰림), lightGamma=하이라이트 집중도. sheen/sheenSpeed/flash는 flow 모드 전용.",
+    "mode": "static",
+    "levels": {
+      "1": {
+        "density": 0.08,
+        "size": 0.6,
+        "alpha": 1
+      },
+      "2": {
+        "density": 0.38,
+        "size": 0.75,
+        "alpha": 0.55
+      },
+      "3": {
+        "density": 0.5,
+        "size": 0.7,
+        "alpha": 0.45
+      }
+    },
+    "alpha": 1,
+    "inset": 2,
+    "blend": "lighter",
+    "lightFloor": 0.3,
+    "lightGamma": 1.3,
+    "sheen": 0.3,
+    "sheenSpeed": 0.25,
+    "flash": 0.9
+  }
 }

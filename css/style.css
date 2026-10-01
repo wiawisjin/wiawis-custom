@@ -406,6 +406,9 @@
 #wiawis-custom .preview-section {
   flex: 1;
   min-width: 0;
+  position: sticky;      /* [v1.6.4] 데스크톱: 스크롤 시 프리뷰 상단 고정 */
+  top: 16px;
+  align-self: flex-start;
   background: #f5f5f5;
   border-radius: 12px;
   padding: 30px;
@@ -418,11 +421,10 @@
   #wiawis-custom .preview-section {
     width: 100%;
     padding: 15px;
-    position: fixed;
+    position: sticky;   /* [v1.7.7] fixed→sticky: 제목·경로가 가려지지 않고, 스크롤하면 상단에 붙음 */
     top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
+    align-self: stretch;
+    z-index: 200;   /* 색상 이름표(z-index 100)보다 위 */
     background: #f5f5f5;
     border-radius: 0;
     box-shadow: 0 2px 10px rgba(0,0,0,0.15);
@@ -432,9 +434,9 @@
     justify-content: center;
   }
   
-  /* 프리뷰 고정으로 인한 컨트롤 섹션 여백 */
+  /* sticky로 바뀌어 프리뷰가 자리를 차지하므로 별도 여백 불필요 */
   #wiawis-custom .step3-layout {
-    padding-top: 46vh;
+    padding-top: 0;
   }
   
   #wiawis-custom .preview-section #preview-canvas {
@@ -864,4 +866,115 @@
   #wiawis-custom .action-buttons {
     flex-direction: column;
   }
+}
+
+/* ============================================================
+   [v1.8.0] Step 0 프론트 페이지 (원본 new.do 구성)
+   ============================================================ */
+#wiawis-custom .intro{color:#222;padding-bottom:80px;}
+#wiawis-custom .intro-hero{position:relative;min-height:520px;display:flex;align-items:center;justify-content:center;text-align:center;background:#12102a center/cover no-repeat;overflow:hidden;}
+#wiawis-custom .intro-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(8,6,24,.62) 0%,rgba(8,6,24,.28) 70%,rgba(8,6,24,.15) 100%),linear-gradient(180deg,rgba(8,6,24,.35) 0%,rgba(8,6,24,0) 40%,rgba(8,6,24,.45) 100%);}
+#wiawis-custom .intro-hero-inner{position:relative;padding:60px 20px;}
+#wiawis-custom .intro-eyebrow{font-size:3.4rem;font-weight:800;letter-spacing:.04em;color:#fff;margin:0 0 14px;line-height:1.1;text-shadow:0 2px 18px rgba(0,0,0,.35);}
+#wiawis-custom .intro-title{font-size:1.5rem;font-weight:600;color:#fff;margin:0 0 34px;line-height:1.5;text-shadow:0 1px 3px rgba(0,0,0,.7),0 2px 16px rgba(0,0,0,.55);}
+#wiawis-custom .intro-cta{display:inline-block;background:#222;color:#fff;border:2px solid #222;border-radius:30px;padding:14px 40px;font-size:1rem;font-weight:700;cursor:pointer;text-decoration:none;line-height:1;transition:background .15s,color .15s,border-color .15s;}
+#wiawis-custom .intro-cta:hover{background:#000;border-color:#000;}
+#wiawis-custom .intro-cta.light{background:#fff;color:#111;border-color:#fff;}
+#wiawis-custom .intro-cta.light:hover{background:transparent;color:#fff;}
+#wiawis-custom .intro-cta.ghost{background:#fff;color:#222;}
+#wiawis-custom .intro-cta.ghost:hover{background:#222;color:#fff;}
+#wiawis-custom .intro-lead{text-align:center;font-size:1.15rem;color:#444;margin:56px 20px 0;}
+#wiawis-custom .intro-steps,#wiawis-custom .intro-price,#wiawis-custom .intro-gallery{max-width:1100px;margin:0 auto;padding:64px 20px 0;}
+#wiawis-custom .intro-h2{font-size:1.8rem;font-weight:800;text-align:center;margin:0 0 8px;color:#111;}
+#wiawis-custom .intro-h2-sub{font-size:.95rem;font-weight:400;color:#999;text-align:center;margin:0 0 44px;letter-spacing:.02em;}
+#wiawis-custom .intro-step-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+#wiawis-custom .intro-step{background:#fff;border:1px solid #ececec;border-radius:16px;padding:32px 22px 28px;text-align:center;}
+#wiawis-custom .intro-step-icon{width:80px;height:80px;margin:0 auto 20px;}
+#wiawis-custom .intro-step-icon img{width:80px;height:80px;display:block;}
+#wiawis-custom .intro-step h5{font-size:1.05rem;font-weight:700;margin:0 0 10px;color:#222;}
+#wiawis-custom .intro-step p{font-size:.88rem;color:#777;line-height:1.7;margin:0;word-break:keep-all;}
+#wiawis-custom .intro-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:40px;}
+#wiawis-custom .intro-gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:36px;}
+#wiawis-custom .intro-gallery-item{margin:0;border-radius:12px;overflow:hidden;background:#f5f5f5;}
+#wiawis-custom .intro-gallery-item img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;transition:transform .3s;}
+#wiawis-custom .intro-gallery-item a:hover img{transform:scale(1.04);}
+#wiawis-custom .intro-gallery-item figcaption{padding:12px;font-size:.9rem;color:#555;text-align:center;}
+#wiawis-custom .intro-gallery-empty{grid-column:1/-1;text-align:center;color:#aaa;padding:40px 0;}
+#wiawis-custom .intro-gallery-link{display:table;margin:0 auto;}
+#wiawis-custom .br-m{display:none;}
+@media (max-width:900px){
+  #wiawis-custom .intro-step-grid{grid-template-columns:repeat(2,1fr);}
+  #wiawis-custom .intro-gallery-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media (max-width:600px){
+  #wiawis-custom .intro-hero{min-height:360px;}
+  #wiawis-custom .intro-eyebrow{font-size:2.1rem;}
+  #wiawis-custom .intro-title{font-size:1.1rem;margin-bottom:26px;}
+  #wiawis-custom .br-m{display:inline;}
+  #wiawis-custom .intro-lead{font-size:1rem;margin-top:40px;word-break:keep-all;}
+  #wiawis-custom .intro-steps,#wiawis-custom .intro-price,#wiawis-custom .intro-gallery{padding-top:48px;}
+  #wiawis-custom .intro-h2{font-size:1.35rem;}
+  #wiawis-custom .intro-step-grid{gap:12px;}
+  #wiawis-custom .intro-step{padding:22px 12px 18px;}
+  #wiawis-custom .intro-step-icon,#wiawis-custom .intro-step-icon img{width:64px;height:64px;}
+  #wiawis-custom .intro-step p{font-size:.8rem;}
+    #wiawis-custom .intro-cta{padding:13px 28px;font-size:.95rem;}
+}
+
+/* 초기화 버튼: 색상 조작 영역 상단 */
+#wiawis-custom .control-toolbar{display:flex;justify-content:flex-end;margin-bottom:10px;}
+#wiawis-custom .control-toolbar .btn-reset-small{padding:7px 14px;background:#fff;border:1px solid #ddd;border-radius:16px;font-size:.82rem;color:#555;cursor:pointer;}
+#wiawis-custom .control-toolbar .btn-reset-small:hover{background:#f5f5f5;border-color:#bbb;}
+
+
+/* ============================================================
+   [v1.9.0] 세그먼트 단계 표시기
+   ============================================================ */
+#wiawis-custom .seg-nav{position:relative;display:flex;justify-content:center;align-items:center;max-width:1200px;margin:0 auto 30px;padding:4px 0;}
+#wiawis-custom .seg-back{position:absolute;left:4px;top:50%;transform:translateY(-50%);background:none;border:0;padding:6px 2px;font-size:.9rem;color:#1d1d1f;cursor:pointer;}
+#wiawis-custom .seg-back:hover{text-decoration:underline;text-underline-offset:3px;}
+#wiawis-custom .seg{display:inline-flex;background:#e8e8ed;border-radius:999px;padding:3px;}
+#wiawis-custom .seg-item{border:0;background:transparent;font:inherit;font-size:.92rem;font-weight:500;color:#1d1d1f;padding:9px 26px;border-radius:999px;line-height:1.2;}
+#wiawis-custom button.seg-item{cursor:pointer;}
+#wiawis-custom button.seg-item:hover{background:rgba(255,255,255,.55);}
+#wiawis-custom .seg-item.cur{background:#fff;font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 1px rgba(0,0,0,.04);}
+#wiawis-custom .seg-item.off{color:#a1a1a6;}
+/* 제목: 굵은 단어 + 회색 문장 */
+#wiawis-custom .step-title.step-hl{font-size:2.2rem;font-weight:700;letter-spacing:-.02em;line-height:1.25;color:#1d1d1f;margin:0;}
+#wiawis-custom .step-title.step-hl span{color:#86868b;font-weight:700;}
+#wiawis-custom .step-summary{font-size:.95rem;color:#6e6e73;margin:8px 0 0;min-height:1.4em;}
+/* 톤 정리 */
+#wiawis-custom .section-block{border:1px solid #e5e5ea !important;border-radius:18px !important;box-shadow:none !important;}
+@media (max-width:768px){
+  #wiawis-custom .seg-nav{flex-direction:column;gap:10px;margin-bottom:22px;}
+  #wiawis-custom .seg-back{position:static;transform:none;align-self:flex-start;font-size:.85rem;}
+  #wiawis-custom .seg-item{padding:8px 15px;font-size:.84rem;}
+  #wiawis-custom .step-title.step-hl{font-size:1.45rem;}
+  #wiawis-custom .step-summary{font-size:.85rem;}
+}
+
+/* ============================================================
+   [v1.9.0] 가격표 — 머리글·구분 칸 짙은 검정, 컴포넌트 안내 별도 줄
+   ============================================================ */
+#wiawis-custom .intro-price-card{max-width:860px;margin:0 auto;background:#fff;border:1px solid #e5e5ea;border-radius:18px;overflow:hidden;}
+#wiawis-custom .intro-price-table{width:100%;border-collapse:collapse;table-layout:fixed;}
+#wiawis-custom .intro-price-table thead th{background:#1d1d1f;color:#fff;font-size:.92rem;font-weight:700;padding:16px 8px;text-align:center;line-height:1.35;border-right:1px solid #3a3a3c;}
+#wiawis-custom .intro-price-table thead th:last-child{border-right:0;}
+#wiawis-custom .intro-price-table thead th small{display:block;font-size:.72rem;font-weight:400;color:rgba(255,255,255,.62);letter-spacing:.04em;margin-top:2px;}
+#wiawis-custom .intro-price-table .col-head{width:20%;background:#1d1d1f;color:#fff;font-weight:700;font-size:.98rem;text-align:center;vertical-align:middle;padding:18px 8px;border-bottom:1px solid #3a3a3c;}
+#wiawis-custom .intro-price-table tbody tr:last-child .col-head{border-bottom:0;}
+#wiawis-custom .intro-price-table tbody td{text-align:center;padding:22px 8px;border-bottom:1px solid #e8e8ed;color:#1d1d1f;}
+#wiawis-custom .intro-price-table tbody tr:last-child td{border-bottom:0;}
+#wiawis-custom .intro-price-table tbody td b{font-size:1.45rem;font-weight:700;letter-spacing:-.01em;}
+#wiawis-custom .intro-price-table tbody td span{font-size:.82rem;font-weight:500;color:#6e6e73;margin-left:2px;}
+#wiawis-custom .intro-price-table tr.price-note td{background:#f5f5f7;font-size:.88rem;color:#48484a;padding:14px 16px;text-align:center;line-height:1.5;}
+@media (max-width:600px){
+  #wiawis-custom .intro-price-card{border-radius:14px;}
+  #wiawis-custom .intro-price-table thead th{font-size:.78rem;padding:12px 3px;}
+  #wiawis-custom .intro-price-table thead th small{font-size:.6rem;letter-spacing:0;}
+  #wiawis-custom .intro-price-table .col-head{width:22%;font-size:.8rem;padding:14px 3px;}
+  #wiawis-custom .intro-price-table tbody td{padding:16px 2px;}
+  #wiawis-custom .intro-price-table tbody td b{font-size:1.1rem;}
+  #wiawis-custom .intro-price-table tbody td span{display:block;font-size:.7rem;margin:1px 0 0;}
+  #wiawis-custom .intro-price-table tr.price-note td{font-size:.76rem;padding:12px 10px;word-break:keep-all;}
 }
