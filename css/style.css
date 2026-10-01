@@ -978,3 +978,19 @@
   #wiawis-custom .intro-price-table tbody td span{display:block;font-size:.7rem;margin:1px 0 0;}
   #wiawis-custom .intro-price-table tr.price-note td{font-size:.76rem;padding:12px 10px;word-break:keep-all;}
 }
+
+/* ============================================================
+   [v1.9.2] 스크롤 정리 (윈도우 브라우저 대응)
+   ============================================================ */
+/* 색상 영역: 세로로만 스크롤 (색 이름표 때문에 생기던 가로 스크롤 제거) + 얇은 스크롤바 */
+/* 세로 스크롤바: 평소엔 숨기고, 스크롤하는 동안만 잠깐 표시 (.is-scrolling은 app.js가 붙였다 뗌) */
+#wiawis-custom .color-grid{overflow-x:hidden !important;scrollbar-width:thin;scrollbar-color:transparent transparent;}
+#wiawis-custom .color-grid.is-scrolling{scrollbar-color:#b8b8bf transparent;}
+#wiawis-custom .color-grid::-webkit-scrollbar{width:6px;height:0;}
+#wiawis-custom .color-grid::-webkit-scrollbar-track{background:transparent;}
+#wiawis-custom .color-grid::-webkit-scrollbar-thumb{background:transparent;border-radius:3px;}
+#wiawis-custom .color-grid.is-scrolling::-webkit-scrollbar-thumb{background:#b8b8bf;}
+/* 커스텀 영역 전체 가로 넘침 방지 (clip은 프리뷰 고정(sticky)을 깨지 않음) */
+@supports (overflow: clip){ #wiawis-custom{overflow-x:clip;} }
+/* 크롬·홀로그램 유광 전용 안내 */
+#wiawis-custom .logo-gloss-note{margin:10px 0 0;padding:9px 12px;background:#f5f5f7;border-radius:10px;font-size:.78rem;color:#48484a;line-height:1.5;}

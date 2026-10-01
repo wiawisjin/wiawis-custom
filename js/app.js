@@ -1415,8 +1415,11 @@
       '3': ['컬러.', ' 나만의 조합을 골라보세요.'],
       '4': ['확인.', ' 완성된 디자인을 살펴보세요.']
     },
-    pearlNotice: { suffix: ' - 펄 적용 컬러', desc: '이 색상은 펄이 기본 적용입니다. 화면의 효과는 참고용입니다.' }
+    pearlNotice: { suffix: ' - 펄 적용 컬러', desc: '이 색상은 펄이 기본 적용입니다. 화면의 효과는 참고용입니다.' },
+    logoGlossOnlyNotice: '크롬 골드·크롬 실버·홀로그램 로고는 유광으로만 제작되어 무광은 선택할 수 없습니다.'
   };
+  // 유광 전용 전사 색: 크롬·홀로그램(type=effect) 또는 config에서 "glossOnly": true 지정한 색
+  const isGlossOnlyLogo = (c) => !!(c && (c.type === 'effect' || c.glossOnly === true));
   // 'intro.title' 처럼 점으로 이어진 경로로 조회 (config.texts 우선)
   function T(path) {
     const get = (obj) => String(path).split('.').reduce((o, k) => (o == null ? undefined : o[k]), obj);
@@ -1846,6 +1849,7 @@
                   <div class="option-buttons" style="display:flex;gap:10px;flex-wrap:wrap;">
                     ${finishes.map(f => {
                       const isSelected = logo.finish === f.id;
+                      const locked = isGlossOnlyLogo(logo.color) && (f.type || f.id) === 'matte';
                       const btnBg = isSelected ? '#222' : '#f0f0f0';
                       const btnBorder = isSelected ? '#222' : '#ccc';
                       const textColor = isSelected ? '#fff' : '#222';
@@ -1853,14 +1857,15 @@
                         ? 'display:inline-block;width:16px;height:16px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,#fff 0%,#ddd 50%,#aaa 100%);border:1px solid #ccc;'
                         : 'display:inline-block;width:16px;height:16px;border-radius:50%;flex-shrink:0;background:#777;border:1px solid #666;';
                       return `
-                      <button class="option-btn ${isSelected ? 'selected' : ''}"
-                              data-logo-finish="${f.id}"
-                              style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:${btnBg};border:2px solid ${btnBorder};border-radius:18px;cursor:pointer;">
+                      <button class="option-btn ${isSelected ? 'selected' : ''}${locked ? ' is-locked' : ''}"
+                              data-logo-finish="${f.id}" ${locked ? 'disabled aria-disabled="true" title="유광 전용 색상입니다"' : ''}
+                              style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:${btnBg};border:2px solid ${btnBorder};border-radius:18px;cursor:${locked ? 'not-allowed' : 'pointer'};${locked ? 'opacity:.4;' : ''}">
                         <span style="${chipStyle}"></span>
                         <span style="color:${textColor};font-size:0.85rem;font-weight:600;">${f.name}</span>
                       </button>
                     `}).join('')}
                   </div>
+                  ${isGlossOnlyLogo(logo.color) ? `<p class="logo-gloss-note">${esc(T('logoGlossOnlyNotice'))}</p>` : ''}
                 </div>
                 
                 <!-- 로고 COLORS -->
@@ -2034,6 +2039,9 @@
     const container = document.getElementById('wiawis-custom');
     if (!container) return;
     const _stepChanged = _lastRenderedStep !== null && _lastRenderedStep !== state.currentStep;
+    if (state.selected.logo && isGlossOnlyLogo(state.selected.logo.color) && state.selected.logo.finish !== 'gloss') {
+      state.selected.logo.finish = 'gloss';   // 크롬·홀로그램은 유광 전용
+    }
     _lastRenderedStep = state.currentStep;
     
     // [v1.6.4] 색상 그리드 스크롤 위치 보존 (색 선택 시 초기화 방지)
@@ -2063,6 +2071,16 @@
     
     // 이벤트 바인딩
     bindEvents();
+    
+    // 색상 영역 스크롤바: 스크롤하는 동안만 표시하고 0.8초 뒤 다시 숨김
+    container.querySelectorAll('.color-grid').forEach(g => {
+      let t = null;
+      g.addEventListener('scroll', () => {
+        g.classList.add('is-scrolling');
+        clearTimeout(t);
+        t = setTimeout(() => g.classList.remove('is-scrolling'), 800);
+      }, { passive: true });
+    });
     
     // 색 이름표 위치 보정 (선택된 이름표 + 마우스 올린 이름표)
     container.querySelectorAll('.color-item').forEach(it => it.addEventListener('mouseenter', () => fitColorTip(it.querySelector('.color-name'))));
@@ -2204,6 +2222,7 @@
     // Step 3: 마감 선택 (로고)
     container.querySelectorAll('.option-btn[data-logo-finish]').forEach(btn => {
       btn.addEventListener('click', () => {
+        if (btn.disabled) return;
         state.selected.logo.finish = btn.dataset.logoFinish;
         render();
       });
@@ -2214,6 +2233,7 @@
       btn.addEventListener('click', () => {
         const colorId = btn.dataset.logoColorId;
         state.selected.logo.color = state.config.colors.logo.find(c => c.id === colorId);
+        if (isGlossOnlyLogo(state.selected.logo.color)) state.selected.logo.finish = 'gloss';   // 유광 전용 → 자동 유광
         render();
       });
     });
