@@ -1832,7 +1832,7 @@
     }
   },
   "background": "#faf8f4",
-  "version": "1.9.3",
+  "version": "1.9.4",
   "buildDate": "2026-09-11T10:00:00+09:00",
   "_blankSlots": {
     "_comment": "빈 번호 - 나중에 채울 자리. 채워지면 paint-{n}/decal-{n} id로 추가",

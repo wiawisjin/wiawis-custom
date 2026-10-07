@@ -98,9 +98,18 @@
   // BASE_URL 설정
   // - 로컬/GitHub Pages: 상대 경로 사용
   // - 외부 CDN 사용 시: CDN URL 입력
-  const BASE_URL = (isLocal || isGitHubPages) 
+  // [v1.9.4] app.js가 실제로 올라가 있는 주소를 기준으로 삼음
+  // → wiawis.com 페이지에 직접 넣어도 config.json·이미지를 Cloudflare에서 불러옴
+  const SCRIPT_BASE = (() => {
+    try {
+      const src = document.currentScript && document.currentScript.src;
+      if (src) return new URL('..', src).href.replace(/\/$/, '');
+    } catch (e) { /* 무시하고 상대 경로 사용 */ }
+    return '.';
+  })();
+  const BASE_URL = (isLocal || isGitHubPages)
     ? '.'  // 로컬 또는 GitHub Pages: 현재 폴더 기준
-    : '.';  // 기본값도 상대 경로 (필요시 CDN URL로 변경 가능)
+    : SCRIPT_BASE;  // 운영: app.js가 있는 곳 기준 (Cloudflare 주소)
   
   console.log('Mode:', isLocal ? 'LOCAL' : (isGitHubPages ? 'GITHUB_PAGES' : 'PRODUCTION'), '| BASE_URL:', BASE_URL);
   
@@ -170,6 +179,8 @@
   function loadImage(path) {
     return new Promise((resolve, reject) => {
       const img = new Image();
+      // [v1.9.4] 다른 도메인(wiawis.com)에서 실행돼도 캔버스 색 처리·PDF 저장이 되도록
+      img.crossOrigin = 'anonymous';
       img.onload = () => resolve(img);
       img.onerror = () => reject(new Error(`Image load failed: ${path}`));
       img.src = getImageUrl(path);
@@ -2012,7 +2023,10 @@
   function scrollToCustomTop() {
     const el = document.getElementById('wiawis-custom');
     if (!el) return;
-    const y = el.getBoundingClientRect().top + window.scrollY - 80;
+    // [v1.9.4] 사이트 고정 헤더가 있으면 그 높이만큼, 없으면 기존처럼 80px 여유
+    const siteHeader = document.querySelector('header.fixed-top');
+    const offset = siteHeader ? siteHeader.offsetHeight + 16 : 80;
+    const y = el.getBoundingClientRect().top + window.scrollY - offset;
     window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
   }
 
